@@ -1,13 +1,16 @@
-# CodeIgniter Database
+[![Latest Stable Version](http://poser.pugx.org/nguyenanhung/codeigniter-database-standalone/v)](https://packagist.org/packages/nguyenanhung/codeigniter-database-standalone) [![Total Downloads](http://poser.pugx.org/nguyenanhung/codeigniter-database-standalone/downloads)](https://packagist.org/packages/nguyenanhung/codeigniter-database-standalone) [![Latest Unstable Version](http://poser.pugx.org/nguyenanhung/codeigniter-database-standalone/v/unstable)](https://packagist.org/packages/nguyenanhung/codeigniter-database-standalone) [![License](http://poser.pugx.org/nguyenanhung/codeigniter-database-standalone/license)](https://packagist.org/packages/nguyenanhung/codeigniter-database-standalone) [![PHP Version Require](http://poser.pugx.org/nguyenanhung/codeigniter-database-standalone/require/php)](https://packagist.org/packages/nguyenanhung/codeigniter-database-standalone)
+
+# CodeIgniter ^3.1.11 Database
 
 Use the Database Library separately from CodeIgniter 3.
 
 ## Installation
 
 ### With Composer
+
 ```json
 "require": {
-    "nguyenanhung/codeigniter-database-standalone": "^1.0"
+"nguyenanhung/codeigniter-database-standalone": "^1.0"
 }
 ```
 
@@ -18,6 +21,7 @@ or with command line : `composer require nguyenanhung/codeigniter-database-stand
 You can also download it from Github, but no autoloader is provided so you'll need to register it with your own PSR-0 compatible autoloader.
 
 # Usage
+
 ```php
 <?php
 use nguyenanhung\CodeIgniterDB as CI;
@@ -44,12 +48,12 @@ $db_data = array(
 );
 $oDb =& CI\DB($db_data);
 ```
+
 For more information visit <a href="http://www.codeigniter.com/userguide3/database/index.html">CodeIgniter user guide</a>.
 
 ## Custom option
 
-I've added the possibility to give a mysql ressource to reuse a already opened connection.
-Thus to not multiply connections and to use this in parallel with legacy code and proceed to a migration step by step.
+I've added the possibility to give a mysql ressource to reuse a already opened connection. Thus to not multiply connections and to use this in parallel with legacy code and proceed to a migration step by step.
 **Works only with the mysql driver !**
 
 ```php
@@ -82,3 +86,13 @@ $rDb = mysql_connect($db_data['hostname'], $db_data['root'], $db_data['password'
 
 $oDb =& CI\DB($db_data, null, $rDb);
 ```
+
+## Contact
+
+If any question & request, please contact following information
+
+| Name        | Email                | Skype            | Facebook      |
+| ----------- | -------------------- | ---------------- | ------------- |
+| Hung Nguyen | dev@nguyenanhung.com | nguyenanhung5891 | @nguyenanhung |
+
+From Hanoi with Love <3
