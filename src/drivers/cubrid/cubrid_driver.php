@@ -1,4 +1,5 @@
 <?php
+
 namespace nguyenanhung\CodeIgniterDB;
 /**
  * CodeIgniter
@@ -27,13 +28,13 @@ namespace nguyenanhung\CodeIgniterDB;
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @package	CodeIgniter
- * @author	EllisLab Dev Team
- * @copyright	Copyright (c) 2008 - 2014, EllisLab, Inc. (http://ellislab.com/)
- * @copyright	Copyright (c) 2014 - 2015, British Columbia Institute of Technology (http://bcit.ca/)
- * @license	http://opensource.org/licenses/MIT	MIT License
- * @link	http://codeigniter.com
- * @since	Version 2.1.0
+ * @package      CodeIgniter
+ * @author       EllisLab Dev Team
+ * @copyright    Copyright (c) 2008 - 2014, EllisLab, Inc. (http://ellislab.com/)
+ * @copyright    Copyright (c) 2014 - 2015, British Columbia Institute of Technology (http://bcit.ca/)
+ * @license      http://opensource.org/licenses/MIT	MIT License
+ * @link         http://codeigniter.com
+ * @since        Version 2.1.0
  * @filesource
  */
 
@@ -44,362 +45,354 @@ namespace nguyenanhung\CodeIgniterDB;
  * creates dynamically based on whether the query builder
  * class is being used or not.
  *
- * @package		CodeIgniter
- * @subpackage	Drivers
- * @category	Database
- * @author		Esen Sagynov
- * @link		http://codeigniter.com/user_guide/database/
+ * @package        CodeIgniter
+ * @subpackage     Drivers
+ * @category       Database
+ * @author         Esen Sagynov
+ * @link           http://codeigniter.com/user_guide/database/
  */
-class CI_DB_cubrid_driver extends CI_DB {
+class CI_DB_cubrid_driver extends CI_DB
+{
 
-	/**
-	 * Database driver
-	 *
-	 * @var	string
-	 */
-	public $dbdriver = 'cubrid';
+    /**
+     * Database driver
+     *
+     * @var    string
+     */
+    public $dbdriver = 'cubrid';
 
-	/**
-	 * Auto-commit flag
-	 *
-	 * @var	bool
-	 */
-	public $auto_commit = TRUE;
+    /**
+     * Auto-commit flag
+     *
+     * @var    bool
+     */
+    public $auto_commit = true;
 
-	// --------------------------------------------------------------------
+    // --------------------------------------------------------------------
 
-	/**
-	 * Identifier escape character
-	 *
-	 * @var	string
-	 */
-	protected $_escape_char = '`';
+    /**
+     * Identifier escape character
+     *
+     * @var    string
+     */
+    protected $_escape_char = '`';
 
-	/**
-	 * ORDER BY random keyword
-	 *
-	 * @var	array
-	 */
-	protected $_random_keyword = array('RANDOM()', 'RANDOM(%d)');
+    /**
+     * ORDER BY random keyword
+     *
+     * @var    array
+     */
+    protected $_random_keyword = array('RANDOM()', 'RANDOM(%d)');
 
-	// --------------------------------------------------------------------
+    // --------------------------------------------------------------------
 
-	/**
-	 * Class constructor
-	 *
-	 * @param	array	$params
-	 * @return	void
-	 */
-	public function __construct($params)
-	{
-		parent::__construct($params);
+    /**
+     * Class constructor
+     *
+     * @param array $params
+     *
+     * @return    void
+     */
+    public function __construct($params)
+    {
+        parent::__construct($params);
 
-		if (preg_match('/^CUBRID:[^:]+(:[0-9][1-9]{0,4})?:[^:]+:[^:]*:[^:]*:(\?.+)?$/', $this->dsn, $matches))
-		{
-			if (stripos($matches[2], 'autocommit=off') !== FALSE)
-			{
-				$this->auto_commit = FALSE;
-			}
-		}
-		else
-		{
-			// If no port is defined by the user, use the default value
-			empty($this->port) OR $this->port = 33000;
-		}
-	}
+        if (preg_match('/^CUBRID:[^:]+(:[0-9][1-9]{0,4})?:[^:]+:[^:]*:[^:]*:(\?.+)?$/', $this->dsn, $matches)) {
+            if (stripos($matches[2], 'autocommit=off') !== false) {
+                $this->auto_commit = false;
+            }
+        } else {
+            // If no port is defined by the user, use the default value
+            empty($this->port) or $this->port = 33000;
+        }
+    }
 
-	// --------------------------------------------------------------------
+    // --------------------------------------------------------------------
 
-	/**
-	 * Non-persistent database connection
-	 *
-	 * @param	bool	$persistent
-	 * @return	resource
-	 */
-	public function db_connect($persistent = FALSE)
-	{
-		if (preg_match('/^CUBRID:[^:]+(:[0-9][1-9]{0,4})?:[^:]+:([^:]*):([^:]*):(\?.+)?$/', $this->dsn, $matches))
-		{
-			$func = ($persistent !== TRUE) ? 'cubrid_connect_with_url' : 'cubrid_pconnect_with_url';
-			return ($matches[2] === '' && $matches[3] === '' && $this->username !== '' && $this->password !== '')
-				? $func($this->dsn, $this->username, $this->password)
-				: $func($this->dsn);
-		}
+    /**
+     * Non-persistent database connection
+     *
+     * @param bool $persistent
+     *
+     * @return    resource
+     */
+    public function db_connect($persistent = false)
+    {
+        if (preg_match('/^CUBRID:[^:]+(:[0-9][1-9]{0,4})?:[^:]+:([^:]*):([^:]*):(\?.+)?$/', $this->dsn, $matches)) {
+            $func = ($persistent !== true) ? 'cubrid_connect_with_url' : 'cubrid_pconnect_with_url';
 
-		$func = ($persistent !== TRUE) ? 'cubrid_connect' : 'cubrid_pconnect';
-		return ($this->username !== '')
-			? $func($this->hostname, $this->port, $this->database, $this->username, $this->password)
-			: $func($this->hostname, $this->port, $this->database);
-	}
+            return ($matches[2] === '' && $matches[3] === '' && $this->username !== '' && $this->password !== '')
+                ? $func($this->dsn, $this->username, $this->password)
+                : $func($this->dsn);
+        }
 
-	// --------------------------------------------------------------------
+        $func = ($persistent !== true) ? 'cubrid_connect' : 'cubrid_pconnect';
 
-	/**
-	 * Reconnect
-	 *
-	 * Keep / reestablish the db connection if no queries have been
-	 * sent for a length of time exceeding the server's idle timeout
-	 *
-	 * @return	void
-	 */
-	public function reconnect()
-	{
-		if (cubrid_ping($this->conn_id) === FALSE)
-		{
-			$this->conn_id = FALSE;
-		}
-	}
+        return ($this->username !== '')
+            ? $func($this->hostname, $this->port, $this->database, $this->username, $this->password)
+            : $func($this->hostname, $this->port, $this->database);
+    }
 
-	// --------------------------------------------------------------------
+    // --------------------------------------------------------------------
 
-	/**
-	 * Database version number
-	 *
-	 * @return	string
-	 */
-	public function version()
-	{
-		if (isset($this->data_cache['version']))
-		{
-			return $this->data_cache['version'];
-		}
+    /**
+     * Reconnect
+     *
+     * Keep / reestablish the db connection if no queries have been
+     * sent for a length of time exceeding the server's idle timeout
+     *
+     * @return    void
+     */
+    public function reconnect()
+    {
+        if (cubrid_ping($this->conn_id) === false) {
+            $this->conn_id = false;
+        }
+    }
 
-		return ( ! $this->conn_id OR ($version = cubrid_get_server_info($this->conn_id)) === FALSE)
-			? FALSE
-			: $this->data_cache['version'] = $version;
-	}
+    // --------------------------------------------------------------------
 
-	// --------------------------------------------------------------------
+    /**
+     * Database version number
+     *
+     * @return    string
+     */
+    public function version()
+    {
+        if (isset($this->data_cache['version'])) {
+            return $this->data_cache['version'];
+        }
 
-	/**
-	 * Execute the query
-	 *
-	 * @param	string	$sql	an SQL query
-	 * @return	resource
-	 */
-	protected function _execute($sql)
-	{
-		return cubrid_query($sql, $this->conn_id);
-	}
+        return (!$this->conn_id or ($version = cubrid_get_server_info($this->conn_id)) === false)
+            ? false
+            : $this->data_cache['version'] = $version;
+    }
 
-	// --------------------------------------------------------------------
+    // --------------------------------------------------------------------
 
-	/**
-	 * Begin Transaction
-	 *
-	 * @return	bool
-	 */
-	protected function _trans_begin()
-	{
-		if (($autocommit = cubrid_get_autocommit($this->conn_id)) === NULL)
-		{
-			return FALSE;
-		}
-		elseif ($autocommit === TRUE)
-		{
-			return cubrid_set_autocommit($this->conn_id, CUBRID_AUTOCOMMIT_FALSE);
-		}
+    /**
+     * Execute the query
+     *
+     * @param string $sql an SQL query
+     *
+     * @return    resource
+     */
+    protected function _execute($sql)
+    {
+        return cubrid_query($sql, $this->conn_id);
+    }
 
-		return TRUE;
-	}
+    // --------------------------------------------------------------------
 
-	// --------------------------------------------------------------------
+    /**
+     * Begin Transaction
+     *
+     * @return    bool
+     */
+    protected function _trans_begin()
+    {
+        if (($autocommit = cubrid_get_autocommit($this->conn_id)) === null) {
+            return false;
+        } elseif ($autocommit === true) {
+            return cubrid_set_autocommit($this->conn_id, CUBRID_AUTOCOMMIT_FALSE);
+        }
 
-	/**
-	 * Commit Transaction
-	 *
-	 * @return	bool
-	 */
-	protected function _trans_commit()
-	{
-		if ( ! cubrid_commit($this->conn_id))
-		{
-			return FALSE;
-		}
+        return true;
+    }
 
-		if ($this->auto_commit && ! cubrid_get_autocommit($this->conn_id))
-		{
-			return cubrid_set_autocommit($this->conn_id, CUBRID_AUTOCOMMIT_TRUE);
-		}
+    // --------------------------------------------------------------------
 
-		return TRUE;
-	}
+    /**
+     * Commit Transaction
+     *
+     * @return    bool
+     */
+    protected function _trans_commit()
+    {
+        if (!cubrid_commit($this->conn_id)) {
+            return false;
+        }
 
-	// --------------------------------------------------------------------
+        if ($this->auto_commit && !cubrid_get_autocommit($this->conn_id)) {
+            return cubrid_set_autocommit($this->conn_id, CUBRID_AUTOCOMMIT_TRUE);
+        }
 
-	/**
-	 * Rollback Transaction
-	 *
-	 * @return	bool
-	 */
-	protected function _trans_rollback()
-	{
-		if ( ! cubrid_rollback($this->conn_id))
-		{
-			return FALSE;
-		}
+        return true;
+    }
 
-		if ($this->auto_commit && ! cubrid_get_autocommit($this->conn_id))
-		{
-			cubrid_set_autocommit($this->conn_id, CUBRID_AUTOCOMMIT_TRUE);
-		}
+    // --------------------------------------------------------------------
 
-		return TRUE;
-	}
+    /**
+     * Rollback Transaction
+     *
+     * @return    bool
+     */
+    protected function _trans_rollback()
+    {
+        if (!cubrid_rollback($this->conn_id)) {
+            return false;
+        }
 
-	// --------------------------------------------------------------------
+        if ($this->auto_commit && !cubrid_get_autocommit($this->conn_id)) {
+            cubrid_set_autocommit($this->conn_id, CUBRID_AUTOCOMMIT_TRUE);
+        }
 
-	/**
-	 * Platform-dependant string escape
-	 *
-	 * @param	string
-	 * @return	string
-	 */
-	protected function _escape_str($str)
-	{
-		return cubrid_real_escape_string($str, $this->conn_id);
-	}
+        return true;
+    }
 
-	// --------------------------------------------------------------------
+    // --------------------------------------------------------------------
 
-	/**
-	 * Affected Rows
-	 *
-	 * @return	int
-	 */
-	public function affected_rows()
-	{
-		return cubrid_affected_rows();
-	}
+    /**
+     * Platform-dependant string escape
+     *
+     * @param string
+     *
+     * @return    string
+     */
+    protected function _escape_str($str)
+    {
+        return cubrid_real_escape_string($str, $this->conn_id);
+    }
 
-	// --------------------------------------------------------------------
+    // --------------------------------------------------------------------
 
-	/**
-	 * Insert ID
-	 *
-	 * @return	int
-	 */
-	public function insert_id()
-	{
-		return cubrid_insert_id($this->conn_id);
-	}
+    /**
+     * Affected Rows
+     *
+     * @return    int
+     */
+    public function affected_rows()
+    {
+        return cubrid_affected_rows();
+    }
 
-	// --------------------------------------------------------------------
+    // --------------------------------------------------------------------
 
-	/**
-	 * List table query
-	 *
-	 * Generates a platform-specific query string so that the table names can be fetched
-	 *
-	 * @param	bool	$prefix_limit
-	 * @return	string
-	 */
-	protected function _list_tables($prefix_limit = FALSE)
-	{
-		$sql = 'SHOW TABLES';
+    /**
+     * Insert ID
+     *
+     * @return    int
+     */
+    public function insert_id()
+    {
+        return cubrid_insert_id($this->conn_id);
+    }
 
-		if ($prefix_limit !== FALSE && $this->dbprefix !== '')
-		{
-			return $sql." LIKE '".$this->escape_like_str($this->dbprefix)."%'";
-		}
+    // --------------------------------------------------------------------
 
-		return $sql;
-	}
+    /**
+     * List table query
+     *
+     * Generates a platform-specific query string so that the table names can be fetched
+     *
+     * @param bool $prefix_limit
+     *
+     * @return    string
+     */
+    protected function _list_tables($prefix_limit = false)
+    {
+        $sql = 'SHOW TABLES';
 
-	// --------------------------------------------------------------------
+        if ($prefix_limit !== false && $this->dbprefix !== '') {
+            return $sql . " LIKE '" . $this->escape_like_str($this->dbprefix) . "%'";
+        }
 
-	/**
-	 * Show column query
-	 *
-	 * Generates a platform-specific query string so that the column names can be fetched
-	 *
-	 * @param	string	$table
-	 * @return	string
-	 */
-	protected function _list_columns($table = '')
-	{
-		return 'SHOW COLUMNS FROM '.$this->protect_identifiers($table, TRUE, NULL, FALSE);
-	}
+        return $sql;
+    }
 
-	// --------------------------------------------------------------------
+    // --------------------------------------------------------------------
 
-	/**
-	 * Returns an object with field data
-	 *
-	 * @param	string	$table
-	 * @return	array
-	 */
-	public function field_data($table)
-	{
-		if (($query = $this->query('SHOW COLUMNS FROM '.$this->protect_identifiers($table, TRUE, NULL, FALSE))) === FALSE)
-		{
-			return FALSE;
-		}
-		$query = $query->result_object();
+    /**
+     * Show column query
+     *
+     * Generates a platform-specific query string so that the column names can be fetched
+     *
+     * @param string $table
+     *
+     * @return    string
+     */
+    protected function _list_columns($table = '')
+    {
+        return 'SHOW COLUMNS FROM ' . $this->protect_identifiers($table, true, null, false);
+    }
 
-		$retval = array();
-		for ($i = 0, $c = count($query); $i < $c; $i++)
-		{
-			$retval[$i]			= new stdClass();
-			$retval[$i]->name		= $query[$i]->Field;
+    // --------------------------------------------------------------------
 
-			sscanf($query[$i]->Type, '%[a-z](%d)',
-				$retval[$i]->type,
-				$retval[$i]->max_length
-			);
+    /**
+     * Returns an object with field data
+     *
+     * @param string $table
+     *
+     * @return    array
+     */
+    public function field_data($table)
+    {
+        if (($query = $this->query('SHOW COLUMNS FROM ' . $this->protect_identifiers($table, true, null, false))) === false) {
+            return false;
+        }
+        $query = $query->result_object();
 
-			$retval[$i]->default		= $query[$i]->Default;
-			$retval[$i]->primary_key	= (int) ($query[$i]->Key === 'PRI');
-		}
+        $retval = array();
+        for ($i = 0, $c = count($query); $i < $c; $i++) {
+            $retval[$i] = new stdClass();
+            $retval[$i]->name = $query[$i]->Field;
 
-		return $retval;
-	}
+            sscanf($query[$i]->Type, '%[a-z](%d)',
+                   $retval[$i]->type,
+                   $retval[$i]->max_length
+            );
 
-	// --------------------------------------------------------------------
+            $retval[$i]->default = $query[$i]->Default;
+            $retval[$i]->primary_key = (int) ($query[$i]->Key === 'PRI');
+        }
 
-	/**
-	 * Error
-	 *
-	 * Returns an array containing code and message of the last
-	 * database error that has occured.
-	 *
-	 * @return	array
-	 */
-	public function error()
-	{
-		return array('code' => cubrid_errno($this->conn_id), 'message' => cubrid_error($this->conn_id));
-	}
+        return $retval;
+    }
 
-	// --------------------------------------------------------------------
+    // --------------------------------------------------------------------
 
-	/**
-	 * FROM tables
-	 *
-	 * Groups tables in FROM clauses if needed, so there is no confusion
-	 * about operator precedence.
-	 *
-	 * @return	string
-	 */
-	protected function _from_tables()
-	{
-		if ( ! empty($this->qb_join) && count($this->qb_from) > 1)
-		{
-			return '('.implode(', ', $this->qb_from).')';
-		}
+    /**
+     * Error
+     *
+     * Returns an array containing code and message of the last
+     * database error that has occured.
+     *
+     * @return    array
+     */
+    public function error()
+    {
+        return array('code' => cubrid_errno($this->conn_id), 'message' => cubrid_error($this->conn_id));
+    }
 
-		return implode(', ', $this->qb_from);
-	}
+    // --------------------------------------------------------------------
 
-	// --------------------------------------------------------------------
+    /**
+     * FROM tables
+     *
+     * Groups tables in FROM clauses if needed, so there is no confusion
+     * about operator precedence.
+     *
+     * @return    string
+     */
+    protected function _from_tables()
+    {
+        if (!empty($this->qb_join) && count($this->qb_from) > 1) {
+            return '(' . implode(', ', $this->qb_from) . ')';
+        }
 
-	/**
-	 * Close DB Connection
-	 *
-	 * @return	void
-	 */
-	protected function _close()
-	{
-		cubrid_close($this->conn_id);
-	}
+        return implode(', ', $this->qb_from);
+    }
+
+    // --------------------------------------------------------------------
+
+    /**
+     * Close DB Connection
+     *
+     * @return    void
+     */
+    protected function _close()
+    {
+        cubrid_close($this->conn_id);
+    }
 
 }

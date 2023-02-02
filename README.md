@@ -8,10 +8,8 @@ Use the Database Library separately from CodeIgniter 3.
 
 ### With Composer
 
-```json
-"require": {
+```shell
 "nguyenanhung/codeigniter-database-standalone": "^1.0"
-}
 ```
 
 or with command line : `composer require nguyenanhung/codeigniter-database-standalone`
@@ -92,7 +90,7 @@ $oDb =& CI\DB($db_data, null, $rDb);
 If any question & request, please contact following information
 
 | Name        | Email                | Skype            | Facebook      |
-| ----------- | -------------------- | ---------------- | ------------- |
+|-------------|----------------------|------------------|---------------|
 | Hung Nguyen | dev@nguyenanhung.com | nguyenanhung5891 | @nguyenanhung |
 
 From Hanoi with Love <3

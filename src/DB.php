@@ -51,7 +51,7 @@ namespace nguyenanhung\CodeIgniterDB;
  *
  * @return mixed
  */
-function &DB($params = '', $query_builder_override = NULL, $conn_id = NULL)
+function &DB($params = '', $query_builder_override = null, $conn_id = null)
 {
 
     // No DB specified yet? Beat them senseless...
@@ -62,7 +62,7 @@ function &DB($params = '', $query_builder_override = NULL, $conn_id = NULL)
     // Load the DB classes. Note: Since the query builder class is optional
     // we need to dynamically create a class that extends proper parent class
     // based on whether we're using the query builder class or not.
-    if ($query_builder_override !== NULL) {
+    if ($query_builder_override !== null) {
         $query_builder = $query_builder_override;
     }
     // Backwards compatibility work-around for keeping the
@@ -74,9 +74,9 @@ function &DB($params = '', $query_builder_override = NULL, $conn_id = NULL)
 
     require_once(dirname(__FILE__) . '/DB_driver.php');
 
-    if (!isset($query_builder) OR $query_builder === TRUE) {
+    if (!isset($query_builder) or $query_builder === true) {
         require_once(dirname(__FILE__) . '/DB_query_builder.php');
-        if (!class_exists(__NAMESPACE__ . '\CI_DB', FALSE)) {
+        if (!class_exists(__NAMESPACE__ . '\CI_DB', false)) {
             /**
              * CI_DB
              *
@@ -89,7 +89,7 @@ function &DB($params = '', $query_builder_override = NULL, $conn_id = NULL)
             {
             }
         }
-    } elseif (!class_exists(__NAMESPACE__ . '\CI_DB', FALSE)) {
+    } elseif (!class_exists(__NAMESPACE__ . '\CI_DB', false)) {
         /**
          * @ignore
          */
@@ -101,12 +101,12 @@ function &DB($params = '', $query_builder_override = NULL, $conn_id = NULL)
     // Load the DB driver
     $driver_file = dirname(__FILE__) . '/drivers/' . $params['dbdriver'] . '/' . $params['dbdriver'] . '_driver.php';
 
-    file_exists($driver_file) OR die('Invalid DB driver');
+    file_exists($driver_file) or die('Invalid DB driver');
     require_once($driver_file);
 
     // Instantiate the DB adapter
     $driver = '\nguyenanhung\CodeIgniterDB\CI_DB_' . $params['dbdriver'] . '_driver';
-    $DB     = new $driver($params);
+    $DB = new $driver($params);
 
     // Check for a subdriver
     if (!empty($DB->subdriver)) {
@@ -115,7 +115,7 @@ function &DB($params = '', $query_builder_override = NULL, $conn_id = NULL)
         if (file_exists($driver_file)) {
             require_once($driver_file);
             $driver = 'CI_DB_' . $DB->dbdriver . '_' . $DB->subdriver . '_driver';
-            $DB     = new $driver($params);
+            $DB = new $driver($params);
         }
     }
 

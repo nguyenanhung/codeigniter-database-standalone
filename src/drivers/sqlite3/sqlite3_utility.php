@@ -1,4 +1,5 @@
 <?php
+
 namespace nguyenanhung\CodeIgniterDB;
 /**
  * CodeIgniter
@@ -27,13 +28,13 @@ namespace nguyenanhung\CodeIgniterDB;
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @package	CodeIgniter
- * @author	EllisLab Dev Team
- * @copyright	Copyright (c) 2008 - 2014, EllisLab, Inc. (http://ellislab.com/)
- * @copyright	Copyright (c) 2014 - 2015, British Columbia Institute of Technology (http://bcit.ca/)
- * @license	http://opensource.org/licenses/MIT	MIT License
- * @link	http://codeigniter.com
- * @since	Version 3.0.0
+ * @package      CodeIgniter
+ * @author       EllisLab Dev Team
+ * @copyright    Copyright (c) 2008 - 2014, EllisLab, Inc. (http://ellislab.com/)
+ * @copyright    Copyright (c) 2014 - 2015, British Columbia Institute of Technology (http://bcit.ca/)
+ * @license      http://opensource.org/licenses/MIT	MIT License
+ * @link         http://codeigniter.com
+ * @since        Version 3.0.0
  * @filesource
  */
 
@@ -41,22 +42,24 @@ namespace nguyenanhung\CodeIgniterDB;
 /**
  * SQLite3 Utility Class
  *
- * @category	Database
- * @author	Andrey Andreev
- * @link	http://codeigniter.com/user_guide/database/
+ * @category    Database
+ * @author      Andrey Andreev
+ * @link        http://codeigniter.com/user_guide/database/
  */
-class CI_DB_sqlite3_utility extends CI_DB_utility {
+class CI_DB_sqlite3_utility extends CI_DB_utility
+{
 
-	/**
-	 * Export
-	 *
-	 * @param	array	$params	Preferences
-	 * @return	mixed
-	 */
-	protected function _backup($params = array())
-	{
-		// Not supported
-		return $this->db->display_error('db_unsupported_feature');
-	}
+    /**
+     * Export
+     *
+     * @param array $params Preferences
+     *
+     * @return    mixed
+     */
+    protected function _backup($params = array())
+    {
+        // Not supported
+        return $this->db->display_error('db_unsupported_feature');
+    }
 
 }

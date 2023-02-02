@@ -1,4 +1,5 @@
 <?php
+
 namespace nguyenanhung\CodeIgniterDB;
 /**
  * CodeIgniter
@@ -27,13 +28,13 @@ namespace nguyenanhung\CodeIgniterDB;
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @package	CodeIgniter
- * @author	EllisLab Dev Team
- * @copyright	Copyright (c) 2008 - 2014, EllisLab, Inc. (http://ellislab.com/)
- * @copyright	Copyright (c) 2014 - 2015, British Columbia Institute of Technology (http://bcit.ca/)
- * @license	http://opensource.org/licenses/MIT	MIT License
- * @link	http://codeigniter.com
- * @since	Version 2.0.3
+ * @package      CodeIgniter
+ * @author       EllisLab Dev Team
+ * @copyright    Copyright (c) 2008 - 2014, EllisLab, Inc. (http://ellislab.com/)
+ * @copyright    Copyright (c) 2014 - 2015, British Columbia Institute of Technology (http://bcit.ca/)
+ * @license      http://opensource.org/licenses/MIT	MIT License
+ * @link         http://codeigniter.com
+ * @since        Version 2.0.3
  * @filesource
  */
 
@@ -41,38 +42,40 @@ namespace nguyenanhung\CodeIgniterDB;
 /**
  * SQLSRV Utility Class
  *
- * @category	Database
- * @author		EllisLab Dev Team
- * @link		http://codeigniter.com/user_guide/database/
+ * @category      Database
+ * @author        EllisLab Dev Team
+ * @link          http://codeigniter.com/user_guide/database/
  */
-class CI_DB_sqlsrv_utility extends CI_DB_utility {
+class CI_DB_sqlsrv_utility extends CI_DB_utility
+{
 
-	/**
-	 * List databases statement
-	 *
-	 * @var	string
-	 */
-	protected $_list_databases	= 'EXEC sp_helpdb'; // Can also be: EXEC sp_databases
+    /**
+     * List databases statement
+     *
+     * @var    string
+     */
+    protected $_list_databases = 'EXEC sp_helpdb'; // Can also be: EXEC sp_databases
 
-	/**
-	 * OPTIMIZE TABLE statement
-	 *
-	 * @var	string
-	 */
-	protected $_optimize_table	= 'ALTER INDEX all ON %s REORGANIZE';
+    /**
+     * OPTIMIZE TABLE statement
+     *
+     * @var    string
+     */
+    protected $_optimize_table = 'ALTER INDEX all ON %s REORGANIZE';
 
-	// --------------------------------------------------------------------
+    // --------------------------------------------------------------------
 
-	/**
-	 * Export
-	 *
-	 * @param	array	$params	Preferences
-	 * @return	bool
-	 */
-	protected function _backup($params = array())
-	{
-		// Currently unsupported
-		return $this->db->display_error('db_unsupported_feature');
-	}
+    /**
+     * Export
+     *
+     * @param array $params Preferences
+     *
+     * @return    bool
+     */
+    protected function _backup($params = array())
+    {
+        // Currently unsupported
+        return $this->db->display_error('db_unsupported_feature');
+    }
 
 }
