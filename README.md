@@ -1,4 +1,7 @@
-[![Latest Stable Version](http://poser.pugx.org/nguyenanhung/codeigniter-database-standalone/v)](https://packagist.org/packages/nguyenanhung/codeigniter-database-standalone) [![Total Downloads](http://poser.pugx.org/nguyenanhung/codeigniter-database-standalone/downloads)](https://packagist.org/packages/nguyenanhung/codeigniter-database-standalone) [![Latest Unstable Version](http://poser.pugx.org/nguyenanhung/codeigniter-database-standalone/v/unstable)](https://packagist.org/packages/nguyenanhung/codeigniter-database-standalone) [![License](http://poser.pugx.org/nguyenanhung/codeigniter-database-standalone/license)](https://packagist.org/packages/nguyenanhung/codeigniter-database-standalone) [![PHP Version Require](http://poser.pugx.org/nguyenanhung/codeigniter-database-standalone/require/php)](https://packagist.org/packages/nguyenanhung/codeigniter-database-standalone)
+[![Latest Stable Version](https://img.shields.io/packagist/v/nguyenanhung/codeigniter3-swoole.svg?style=flat-square)](https://packagist.org/packages/nguyenanhung/codeigniter3-swoole)
+[![Total Downloads](https://img.shields.io/packagist/dt/nguyenanhung/codeigniter3-swoole.svg?style=flat-square)](https://packagist.org/packages/nguyenanhung/codeigniter3-swoole)
+[![License](https://img.shields.io/packagist/l/nguyenanhung/codeigniter3-swoole.svg?style=flat-square)](https://packagist.org/packages/nguyenanhung/codeigniter3-swoole)
+[![PHP Version Require](https://img.shields.io/packagist/dependency-v/nguyenanhung/codeigniter3-swoole/php)](https://packagist.org/packages/nguyenanhung/codeigniter3-swoole)
 
 # CodeIgniter ^3.1.11 Database
 
